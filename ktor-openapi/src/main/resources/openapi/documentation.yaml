@@ -1,0 +1,84 @@
+openapi: "3.0.3"
+info:
+  title: "ktor_openapi API"
+  description: "ktor_openapi API"
+  version: "1.0.0"
+servers:
+  - url: "https://ktor_openapi"
+paths:
+  /messages:
+    get:
+      description: "Get all messages"
+      parameters:
+        - in: query
+          name: text
+          schema:
+            type: string
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/MessageDto"
+    post:
+      description: "Add a new message"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MessageDto"
+            example:
+              message: "Witam"
+              user:
+                name: "Piotr"
+      responses:
+        200:
+          description: "OK"
+    delete:
+      description: "Delete all messages"
+      responses:
+        200:
+          description: "OK"
+  /messages/{id}:
+    get:
+      description: "Get message with given id"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/MessageDto"
+components:
+  schemas:
+    UserDto:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+      required:
+        - name
+    MessageDto:
+      type: "object"
+      properties:
+        id:
+          type: string
+        text:
+          type: "string"
+        user:
+          $ref: "#/components/schemas/UserDto"
+      required:
+        - text
+        - user

@@ -1,0 +1,19 @@
+### Get all messages with text as filter
+    http://localhost:8080/messages?text=
+
+### Get messages with id
+    http://localhost:8080/messages/bdf86f0d-aaf3-4b31-8e96-6c1430863cc5
+
+### Add a message
+POST http://localhost:8080/messages
+Content-Type: application/json
+
+{
+  "text": "Serv",
+  "user": {
+    "name": "Matthias"
+  }
+}
+
+### Delete all messages
+DELETE http://localhost:8080/messages

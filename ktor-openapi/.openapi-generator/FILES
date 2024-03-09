@@ -1,0 +1,3 @@
+src/main/kotlin/it/achtelik/ktorOpenapi/generated/openapi/Paths.kt
+src/main/kotlin/it/achtelik/ktorOpenapi/generated/openapi/models/MessageDto.kt
+src/main/kotlin/it/achtelik/ktorOpenapi/generated/openapi/models/UserDto.kt

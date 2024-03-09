@@ -1,0 +1,39 @@
+{{>licenseInfo}}
+package {{packageName}}
+
+import io.ktor.resources.*
+import kotlinx.serialization.*
+import {{packageName}}.models.*
+{{#imports}}import {{import}}
+{{/imports}}
+
+{{#apiInfo}}
+    object Paths {
+    {{#apis}}
+        {{#operations}}
+            object OperationMap {
+            {{#operation}}
+                const val {{operationId}} = "{{path}}"
+            {{/operation}}
+            }
+        {{/operations}}
+
+        {{#operations}}
+            {{#operation}}
+                /**{{#summary}}
+                    * {{.}}{{/summary}}
+                * {{unescapedNotes}}
+                {{#allParams}}{{^isBodyParam}}* @param {{paramName}} {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+                {{/isBodyParam}}{{/allParams}}*/
+                {{#hasParams}}
+                    @Serializable @Resource(OperationMap.{{operationId}}) class {{operationId}}({{#allParams}}{{^isBodyParam}}val {{paramName}}: {{{dataType}}}{{^required}}? = null{{/required}}{{#required}}{{#isNullable}}?{{/isNullable}}{{/required}}{{^-last}}, {{/-last}}{{/isBodyParam}}{{/allParams}})
+                {{/hasParams}}
+                {{^hasParams}}
+                    @Serializable @Resource(OperationMap.{{operationId}}) class {{operationId}}
+                {{/hasParams}}
+
+            {{/operation}}
+        {{/operations}}
+    {{/apis}}
+    }
+{{/apiInfo}}

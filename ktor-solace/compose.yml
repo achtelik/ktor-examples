@@ -1,0 +1,63 @@
+version: '3.7'
+name: 'ktor-solace'
+services:
+  solace:
+    image: solace/solace-pubsub-standard:10.6
+    shm_size: 1g
+    ulimits:
+      core: -1
+      nofile:
+        soft: 2448
+        hard: 6592
+    ports:
+      #SEMP / PubSub+ Manager
+      - '58080:8080'
+      #SMF
+      - '55554:55555'
+      #SMF over TLS
+      - '55443:55443'
+    environment:
+      - username_admin_globalaccesslevel=admin
+      - username_admin_password=admin
+      - system_scaling_maxconnectioncount=100
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080" ]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+  solace-configurer:
+    image: alpine/curl
+    depends_on:
+      solace:
+        condition: service_healthy
+    command: >
+      sh -c "
+        VPN_NAME=ktor;
+        USERNAME=ktor-client-user;
+        PASSWORD=ktor-password;
+      
+        HEADER='Content-Type: application/json';
+        AUTH=admin:admin;
+        TARGET=host.docker.internal:58080/SEMP/v2/config/msgVpns;
+      
+        # Create VPN
+        VPN_PAYLOAD='{\"msgVpnName\": \"'$$VPN_NAME'\", \"enabled\": true}';
+        curl -X POST $$TARGET -u $$AUTH -d \"$$VPN_PAYLOAD\" -H \"$$HEADER\";
+      
+        # Create client username
+        USER_PAYLOAD='{\"clientUsername\": \"'$$USERNAME'\", \"password\": \"'$$PASSWORD'\",  \"enabled\": true}';
+        curl -X POST $$TARGET/$$VPN_NAME/clientUsernames -u $$AUTH -d \"$$USER_PAYLOAD\" -H \"$$HEADER\";
+      
+        # Change settings
+        curl -X PATCH $$TARGET/$$VPN_NAME -u $$AUTH -d '{\"authenticationBasicType\": \"internal\", \"maxMsgSpoolUsage\": 1024}' -H \"$$HEADER\";
+        curl -X PATCH $$TARGET/$$VPN_NAME/clientProfiles/default -u $$AUTH -d '{\"allowBridgeConnectionsEnabled\": true, \"allowGuaranteedEndpointCreateDurability\": \"all\"}' -H \"$$HEADER\";
+        curl -X PATCH $$TARGET/$$VPN_NAME/clientProfiles/default -u $$AUTH -d '{\"allowGuaranteedEndpointCreateEnabled\": true, \"allowGuaranteedMsgReceiveEnabled\": true}' -H \"$$HEADER\";
+        curl -X PATCH $$TARGET/$$VPN_NAME/clientProfiles/default -u $$AUTH -d '{\"allowGuaranteedMsgSendEnabled\": true, \"allowTransactedSessionsEnabled\": true, \"tlsAllowDowngradeToPlainTextEnabled\": true}' -H \"$$HEADER\";
+      
+        # Create queues
+        curl -X POST $$TARGET/$$VPN_NAME/queues -u $$AUTH -d '{\"queueName\": \"'KtorQtest'\", \"egressEnabled\": true, \"ingressEnabled\": true, \"permission\": \"consume\"}' -H \"$$HEADER\";    
+      
+        # Create queue subscriptions
+        # If you use a more complex queue name with "/", than use the url encoded queue name. E.g. $(echo "$SOLACE_TOPIC_NAME" | sed 's#/#%2F#g')
+        curl -X POST $$TARGET/$$VPN_NAME/queues/KtorQtest/subscriptions -u $$AUTH -d '{\"queueName\": \"'KtorQtest'\", \"subscriptionTopic\": \"'KtorTtest'\"}' -H \"$$HEADER\";      
+      "

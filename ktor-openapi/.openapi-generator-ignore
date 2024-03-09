@@ -1,0 +1,3 @@
+**
+!src/main/kotlin/it/achtelik/ktorOpenapi/generated/openapi/models/**
+!src/main/kotlin/it/achtelik/ktorOpenapi/generated/openapi/Paths.kt
