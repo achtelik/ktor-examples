@@ -1,6 +1,6 @@
-package it.achtelik.ktor_mongodb_mongock.modules.messages.dataproviders.mongo
+package it.achtelik.ktorMongodbMongock.modules.messages.dataproviders.mongo
 
-import it.achtelik.ktor_mongodb_mongock.basics.mongo.MongoConfig
+import it.achtelik.ktorMongodbMongock.basics.mongo.MongoConfig
 import kotlinx.coroutines.flow.toList
 import java.time.Instant
 import java.util.UUID

@@ -1,4 +1,4 @@
-package it.achtelik.ktor_mongodb_mongock.basics.mongo.migration
+package it.achtelik.ktorMongodbMongock.basics.mongo.migration
 
 import com.mongodb.client.result.InsertOneResult
 import com.mongodb.reactivestreams.client.MongoDatabase

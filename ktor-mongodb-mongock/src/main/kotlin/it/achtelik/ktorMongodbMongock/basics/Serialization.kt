@@ -1,4 +1,4 @@
-package it.achtelik.ktor_mongodb_mongock.basics
+package it.achtelik.ktorMongodbMongock.basics
 
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*

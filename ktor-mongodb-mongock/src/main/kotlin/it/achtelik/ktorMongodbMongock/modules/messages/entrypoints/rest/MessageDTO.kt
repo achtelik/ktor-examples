@@ -1,6 +1,6 @@
-package it.achtelik.ktor_mongodb_mongock.modules.messages.entrypoints.rest
+package it.achtelik.ktorMongodbMongock.modules.messages.entrypoints.rest
 
-import it.achtelik.ktor_mongodb_mongock.modules.messages.dataproviders.mongo.MessageDOC
+import it.achtelik.ktorMongodbMongock.modules.messages.dataproviders.mongo.MessageDOC
 import kotlinx.serialization.Serializable
 
 @Serializable

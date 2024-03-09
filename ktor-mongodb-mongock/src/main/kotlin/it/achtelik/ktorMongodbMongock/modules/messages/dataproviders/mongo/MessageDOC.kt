@@ -1,4 +1,4 @@
-package it.achtelik.ktor_mongodb_mongock.modules.messages.dataproviders.mongo
+package it.achtelik.ktorMongodbMongock.modules.messages.dataproviders.mongo
 
 import org.bson.codecs.pojo.annotations.BsonId
 import java.time.Instant

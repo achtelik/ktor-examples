@@ -1,4 +1,4 @@
-package it.achtelik.ktor_mongodb_mongock.basics.mongo
+package it.achtelik.ktorMongodbMongock.basics.mongo
 
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings

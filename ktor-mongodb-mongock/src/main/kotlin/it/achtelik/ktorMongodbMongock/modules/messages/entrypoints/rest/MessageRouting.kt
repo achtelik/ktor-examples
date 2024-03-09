@@ -1,9 +1,9 @@
-package it.achtelik.ktor_mongodb_mongock.modules.messages.entrypoints.rest
+package it.achtelik.ktorMongodbMongock.modules.messages.entrypoints.rest
 
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import it.achtelik.ktor_mongodb_mongock.modules.messages.dataproviders.mongo.MessageRepository
+import it.achtelik.ktorMongodbMongock.modules.messages.dataproviders.mongo.MessageRepository
 import java.time.Instant
 
 private val messageRepository = MessageRepository()

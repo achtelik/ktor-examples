@@ -1,0 +1,5 @@
+GET localhost:8080/messages
+
+###
+
+POST localhost:8080/messages
