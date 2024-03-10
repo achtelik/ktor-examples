@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Use include all if you have it easy-->
+    <!-- <includeAll path="scripts/" relativeToChangelogFile="true"/>-->
+
+    <!-- Use separate includes, if you want more control. It has benefits, if
+    you want to already write db updates for releases in the future. E.g. you remove a logic
+    from your code, but the databse should be updated later. You could prepare everything and
+    activate it later. -->
+    <include file="scripts/0001-create-message-table.sql" relativeToChangelogFile="true"/>
+</databaseChangeLog>

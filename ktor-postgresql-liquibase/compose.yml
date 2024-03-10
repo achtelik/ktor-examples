@@ -1,0 +1,11 @@
+version: '3.9'
+name: 'ktor-postgresql-liquibase'
+services:
+  postgres:
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: app
