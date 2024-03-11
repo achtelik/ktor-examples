@@ -3,6 +3,6 @@ create table messages
 (
     id        uuid primary key,
     content   text,
-    createdAt timestamp
+    created_at timestamp
 );
 --rollback

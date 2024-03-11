@@ -1,9 +1,7 @@
 package it.achtelik.ktorPostgresqlLiquibase.modules.messages.domain
 
-import it.achtelik.ktorPostgresqlLiquibase.modules.messages.dataproviders.postgres.MessageRepository
-
 class MessageService(
-    private val messageRepository: MessageRepository
+    private val messageRepository: MessageRepositoryInterface
 ) {
 
     suspend fun find(): List<Message> {
